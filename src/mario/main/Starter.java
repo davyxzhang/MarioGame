@@ -51,6 +51,7 @@ public class Starter{
 	 */
 	public void loadPics(){
 		bg = new ImageIcon("img\\MarioBG.jpg").getImage();
+		bg = bg.getScaledInstance(screen.getWidth(), screen.getHeight(), Image.SCALE_DEFAULT);
 		Image bowser1 = new ImageIcon("img\\bowserleft.gif").getImage();
 		Image bowser2 = new ImageIcon("img\\bowserright.gif").getImage();
 		
@@ -79,12 +80,14 @@ public class Starter{
 		screen = new ScreenManager();
 		try{
 			DisplayMode dm = screen.findFirstCompatibleMode(modes1);
-			
+
 			screen.setFullScreen(dm);
+			ScreenManager.width = screen.getWidth();
+			ScreenManager.height = screen.getHeight();
 			loadPics();
 			movieLoop();
 		}finally{
-			screen.restoreScreen();
+			//screen.restoreScreen();
 		}
 	}
 	
@@ -150,10 +153,10 @@ public class Starter{
 		FontMetrics fm = g.getFontMetrics();
 		fm = g.getFontMetrics();
 		g.setFont(f2);
-		g.drawString("Mario Survival", 370-fm.stringWidth("Mario Survival")/2, 30-fm.getHeight()/2);
+		g.drawString("Mario Survival", screen.getWidth()/2-fm.stringWidth("Mario Survival")/2, 70-fm.getHeight()/2);
 		g.setFont(f1);
-		g.drawString("Score:"+k, 400-fm.stringWidth("Score:         ")/2, 50-fm.getHeight()/2);
-		g.drawString("Press ESC to exit", 383-fm.stringWidth("Press ESC to exit")/2, 70-fm.getHeight()/2);
+		g.drawString("Score:"+k, screen.getWidth()/2-fm.stringWidth("Score:         ")/2, 90-fm.getHeight()/2);
+		g.drawString("Press ESC to exit", screen.getWidth()/2-fm.stringWidth("Press ESC to exit")/2, 110-fm.getHeight()/2);
 
 	}
 	

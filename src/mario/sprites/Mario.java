@@ -1,5 +1,6 @@
 package mario.sprites;
 import java.awt.Image;
+import mario.screen.ScreenManager;
 
 import javax.swing.ImageIcon;
 /**
@@ -18,24 +19,24 @@ public class Mario {
 	}
 	
 	public void updateXLeft(){
-		if(x<5){
-			x = 0;
+		if(x<43){
+			x = 10;
 		}else{
 			x += -20F;	
 		}
 	}
 	
 	public void updateXRight(){
-		if(x>758){
-			x = 774;
+		if(x>ScreenManager.width-50){
+			x = ScreenManager.width-30;
 		}else{
 			x += 20F;	
 		}
 	}
 	
 	public void updateYUp(){
-		if(y<20){
-			y = 0;
+		if(y<60){
+			y = 35;
 		}
 		else{
 			y += -20F;	
@@ -43,8 +44,8 @@ public class Mario {
 	}
 	
 	public void updateYDown(){
-		if(y>550){
-			y = 572;
+		if(y>ScreenManager.height-60){
+			y = ScreenManager.height-40;
 		}
 		else{
 			y += 20F;	

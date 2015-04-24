@@ -35,7 +35,7 @@ public class ButtonHandler extends Frame implements ActionListener
 		}
 		if(label.equals("Start Game")){
 			Starter main = new Starter();
-			main.run();
+			//main.run();
 		}
 	}
 	public JDialog showInstructions()

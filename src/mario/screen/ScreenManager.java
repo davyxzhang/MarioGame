@@ -21,6 +21,8 @@ public class ScreenManager extends KeyAdapter implements KeyListener{
 	public boolean keyRight = false;
 	public boolean keyUp = false;
 	public boolean keyDown = false;
+	public static int width;
+	public static int height;
 	
 	public void keyPressed(KeyEvent e){
 		int keyCode = e.getKeyCode();
@@ -114,15 +116,16 @@ public class ScreenManager extends KeyAdapter implements KeyListener{
 	 */
 	public void setFullScreen(DisplayMode dm){
 		JFrame f = new JFrame();
-		f.setUndecorated(true);
+		f.setUndecorated(false);
 		f.setIgnoreRepaint(true);
-		f.setResizable(false);
+		f.setResizable(true);
 		gd.setFullScreenWindow(f);
 		f.addKeyListener(this);
 	
 		if(dm != null && gd.isDisplayChangeSupported()){
 			try{
-				gd.setDisplayMode(dm);
+				//lets not change the users resolution...its a hassle
+				//gd.setDisplayMode(dm);
 			}catch(Exception ex){}
 		}
 		//two different buffers we'll be using
