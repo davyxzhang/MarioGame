@@ -33,8 +33,9 @@ public class Starter{
 	private Mario m = new Mario();
 	static boolean collide = false;
 	static int k = 0;
-	private Font f1 = new Font("Arial", 0, 16);
-	private Font f2 = new Font("Arial", 0, 20);
+	private Font f1 = new Font("Arial", 0, 25);
+	private Font f2 = new Font("Arial", 0, 30);
+	private boolean gameStart = false;
 
 	
 	private static final DisplayMode modes1[] = {
@@ -50,6 +51,10 @@ public class Starter{
 	 * This loads pictures from computer to java and then add the pictures into the scenes in the Animation class.
 	 */
 	public void loadPics(){
+		//lets set the initial position of mario
+		m.setX(ScreenManager.width/2.0f);
+		m.setY(ScreenManager.height/2.0f);
+		
 		bg = new ImageIcon("img\\MarioBG.jpg").getImage();
 		bg = bg.getScaledInstance(screen.getWidth(), screen.getHeight(), Image.SCALE_DEFAULT);
 		Image bowser1 = new ImageIcon("img\\bowserleft.gif").getImage();
@@ -82,8 +87,6 @@ public class Starter{
 			DisplayMode dm = screen.findFirstCompatibleMode(modes1);
 
 			screen.setFullScreen(dm);
-			ScreenManager.width = screen.getWidth();
-			ScreenManager.height = screen.getHeight();
 			loadPics();
 			movieLoop();
 		}finally{
@@ -97,10 +100,7 @@ public class Starter{
 	public void movieLoop(){
 		long startingTime = System.currentTimeMillis();
 		long cumulativeTime = startingTime;
-		
-		/**
-		 * Breaks out of the loop when the time passes 5 seconds.
-		 */
+
 		while(!collide){
 			long timePassed = System.currentTimeMillis() - cumulativeTime;
 			cumulativeTime += timePassed;
@@ -113,8 +113,9 @@ public class Starter{
 			screen.update();
 			this.update(timePassed);
 			//this will be used as score
-			k++;
-			
+			if(gameStart){
+				k++;
+			}
 			int xdiff = ((int)(m.getX()+13)) - ((int)(sprite1.getX()+32));
 			int ydiff = (int)((m.getY()+14)- (int)(sprite1.getY()+48));
 						
@@ -137,7 +138,6 @@ public class Starter{
 		}
 	}
 	
-	Image mario1 = new ImageIcon("mariofly.gif").getImage();
 	/**
 	 *Draw method 
 	 */
@@ -148,16 +148,19 @@ public class Starter{
 		 */
 		g.drawImage(sprite1.getImage(), Math.round(sprite1.getX()), Math.round(sprite1.getY()), null);
 		g.drawImage(sprite2.getImage(), Math.round(sprite2.getX()), Math.round(sprite2.getY()), null);
+		System.err.println(m.getX()+" " + m.getY());
 		g.drawImage(m.getImage(), Math.round(m.getX()), Math.round(m.getY()), null);
 		
 		FontMetrics fm = g.getFontMetrics();
 		fm = g.getFontMetrics();
 		g.setFont(f2);
-		g.drawString("Mario Survival", screen.getWidth()/2-fm.stringWidth("Mario Survival")/2, 70-fm.getHeight()/2);
+		g.drawString("Mario Survival", screen.getWidth()/2-40, 70-fm.getHeight()/2);
 		g.setFont(f1);
-		g.drawString("Score:"+k, screen.getWidth()/2-fm.stringWidth("Score:         ")/2, 90-fm.getHeight()/2);
-		g.drawString("Press ESC to exit", screen.getWidth()/2-fm.stringWidth("Press ESC to exit")/2, 110-fm.getHeight()/2);
-
+		g.drawString("Score:"+k, screen.getWidth()/2, 100-fm.getHeight()/2);
+		g.drawString("Press ESC to exit", screen.getWidth()/2-45, 130-fm.getHeight()/2);
+		if(!gameStart) {
+			g.drawString("Press any direction to start the game.", screen.getWidth()/2-150, ScreenManager.height/2-100);
+		}
 	}
 	
 	/**
@@ -165,35 +168,36 @@ public class Starter{
 	 * @param timePassed update's sprite's positions based on the time passed.
 	 */
 	public void update(long timePassed){
-		//sprite1 movement
-		if(sprite1.getX() < 0){
-			sprite1.setVelocityX(Math.abs(sprite1.getVelocityX()));
-		}else if(sprite1.getX() + sprite1.getWidth() >= screen.getWidth()){
-			sprite1.setVelocityX(-Math.abs(sprite1.getVelocityX()+(float).05));
+		if(gameStart) {
+			//sprite1 movement
+			if(sprite1.getX() < 0){
+				sprite1.setVelocityX(Math.abs(sprite1.getVelocityX()));
+			}else if(sprite1.getX() + sprite1.getWidth() >= screen.getWidth()){
+				sprite1.setVelocityX(-Math.abs(sprite1.getVelocityX()+(float).05));
+			}
+			
+			if(sprite1.getY() < 0){
+				sprite1.setVelocityY(Math.abs(sprite1.getVelocityY()));
+			}else if(sprite1.getY() + sprite1.getHeight() >= screen.getHeight()){
+				sprite1.setVelocityY(-Math.abs(sprite1.getVelocityY()+(float).05));
+			}
+			
+			//sprite2 movement
+			if(sprite2.getX() < 0){
+				sprite2.setVelocityX(Math.abs(sprite2.getVelocityX()));
+			}else if(sprite2.getX() + sprite2.getWidth() >= screen.getWidth()){
+				sprite2.setVelocityX(-Math.abs(sprite2.getVelocityX()+(float).05));
+			}
+			
+			if(sprite2.getY() < 0){
+				sprite2.setVelocityY(Math.abs(sprite2.getVelocityY()));
+			}else if(sprite2.getY() + sprite2.getHeight() >= screen.getHeight()){
+				sprite2.setVelocityY(-Math.abs(sprite2.getVelocityY()+(float).05));
+			}
+	
+			sprite1.update(timePassed);
+			sprite2.update(timePassed);
 		}
-		
-		if(sprite1.getY() < 0){
-			sprite1.setVelocityY(Math.abs(sprite1.getVelocityY()));
-		}else if(sprite1.getY() + sprite1.getHeight() >= screen.getHeight()){
-			sprite1.setVelocityY(-Math.abs(sprite1.getVelocityY()+(float).05));
-		}
-		
-		//sprite2 movement
-		if(sprite2.getX() < 0){
-			sprite2.setVelocityX(Math.abs(sprite2.getVelocityX()));
-		}else if(sprite2.getX() + sprite2.getWidth() >= screen.getWidth()){
-			sprite2.setVelocityX(-Math.abs(sprite2.getVelocityX()+(float).05));
-		}
-		
-		if(sprite2.getY() < 0){
-			sprite2.setVelocityY(Math.abs(sprite2.getVelocityY()));
-		}else if(sprite2.getY() + sprite2.getHeight() >= screen.getHeight()){
-			sprite2.setVelocityY(-Math.abs(sprite2.getVelocityY()+(float).05));
-		}
-
-		sprite1.update(timePassed);
-		sprite2.update(timePassed);
-		
 		//position of mario update
 		if(screen.keyDown){
 			m.updateYDown();
@@ -201,6 +205,7 @@ public class Starter{
 			screen.keyUp = false;
 			screen.keyLeft = false;
 			screen.keyRight = false;
+			gameStart = true;
 		}
 		if(screen.keyUp){
 			m.updateYUp();
@@ -208,6 +213,7 @@ public class Starter{
 			screen.keyUp = false;
 			screen.keyLeft = false;
 			screen.keyRight = false;
+			gameStart = true;
 		}
 		if(screen.keyLeft){
 			m.updateXLeft();
@@ -215,6 +221,7 @@ public class Starter{
 			screen.keyUp = false;
 			screen.keyLeft = false;
 			screen.keyRight = false;
+			gameStart = true;
 		}
 		if(screen.keyRight){
 			m.updateXRight();
@@ -222,6 +229,7 @@ public class Starter{
 			screen.keyUp = false;
 			screen.keyLeft = false;
 			screen.keyRight = false;
+			gameStart = true;
 		}
 	}
 }

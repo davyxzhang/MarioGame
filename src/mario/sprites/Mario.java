@@ -10,12 +10,18 @@ import javax.swing.ImageIcon;
  */
 public class Mario {
 	
-	private float x = 410;
-	private float y = 422;
+	private float x;
+	private float y;
 	boolean collide = false;
 	
 	Image mario1 = new ImageIcon("img\\mariofly.gif").getImage();
-	public Mario(){
+	
+	public void setX(float newX) {
+		x = newX;
+	}
+	
+	public void setY(float newY) {
+		y = newY;
 	}
 	
 	public void updateXLeft(){

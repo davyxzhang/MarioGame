@@ -11,8 +11,8 @@ import mario.screen.Animation;
 public class Sprite {
 	
 	private Animation a;
-	private float x = 0;
-	private float y = 0;
+	private float x = 20;
+	private float y = 30;
 	//velocity of x and y.
 	private float vx;
 	private float vy;

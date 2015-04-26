@@ -27,6 +27,7 @@ public class ScreenManager extends KeyAdapter implements KeyListener{
 	public void keyPressed(KeyEvent e){
 		int keyCode = e.getKeyCode();
 		if(keyCode == KeyEvent.VK_ESCAPE){
+			//Thread.interrupted();
 			System.exit(0);
 		}
 
@@ -116,6 +117,8 @@ public class ScreenManager extends KeyAdapter implements KeyListener{
 	 */
 	public void setFullScreen(DisplayMode dm){
 		JFrame f = new JFrame();
+		//if they click X to leave, exit the program.
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setUndecorated(false);
 		f.setIgnoreRepaint(true);
 		f.setResizable(true);
@@ -130,6 +133,8 @@ public class ScreenManager extends KeyAdapter implements KeyListener{
 		}
 		//two different buffers we'll be using
 		f.createBufferStrategy (2);
+		width = getWidth();
+		height = getHeight();
 	}
 	
 	/**

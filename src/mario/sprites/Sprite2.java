@@ -2,6 +2,7 @@ package mario.sprites;
 import java.awt.Image;
 
 import mario.screen.Animation;
+import mario.screen.ScreenManager;
 
 /**
  * This is the movement for one of the bowsers
@@ -11,8 +12,8 @@ import mario.screen.Animation;
 public class Sprite2 {
 	
 	private Animation a;
-	private float x = 700;
-	private float y = 0;
+	private float x = ScreenManager.width-80;
+	private float y = 30;
 	//velocity of x and y.
 	private float vx ;
 	private float vy ;
