@@ -148,7 +148,6 @@ public class Starter{
 		 */
 		g.drawImage(sprite1.getImage(), Math.round(sprite1.getX()), Math.round(sprite1.getY()), null);
 		g.drawImage(sprite2.getImage(), Math.round(sprite2.getX()), Math.round(sprite2.getY()), null);
-		System.err.println(m.getX()+" " + m.getY());
 		g.drawImage(m.getImage(), Math.round(m.getX()), Math.round(m.getY()), null);
 		
 		FontMetrics fm = g.getFontMetrics();
