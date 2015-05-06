@@ -9,4 +9,6 @@ This involved:
   - Checking for edge of screen
   - Simple score based on time
 
-Developed in Eclipse IDE--will package it up once it's been finalized.
+Developed in Eclipse IDE
+
+Run the Mario.jar file for the demo.
